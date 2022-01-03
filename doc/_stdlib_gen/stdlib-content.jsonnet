@@ -599,6 +599,33 @@ local html = import 'html.libsonnet';
             Returns a string.
           |||,
         },
+        {
+          name: 'toBool',
+          params: ['input', 'all=false'],
+          description: [
+            html.p({}, |||
+              Cast various types to a Boolean. Mimics Python logic. The boolean <code>all</code> reveals hidden fields within Objects.
+            |||),
+            html.pre({}, |||
+              std.toBool([])                        // false, empty Array
+              std.toBool([null])                    // true, Array with items
+              std.toBool(true)                      // true
+              std.toBool(false)                     // false
+              std.toBool(function() null)           // true, Functions are always true...
+              std.toBool(function(a) a)             // true, ...regardless of signature
+              std.toBool(0)                         // false
+              std.toBool(1)                         // true
+              std.toBool(-1)                        // true
+              std.toBool({})                        // false, empty Object
+              std.toBool({ foo: null })             // true, visible fields
+              std.toBool({ foo:: null })            // false, appears to be an empty Object
+              std.toBool({ foo:: null }, all=true)  // true, visible fields
+              std.toBool('')                        // false
+              std.toBool(' ')                       // true
+              std.toBool(null)                      // false
+            |||),
+          ]
+        },
       ],
     },
     {

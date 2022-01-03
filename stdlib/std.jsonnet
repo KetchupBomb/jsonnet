@@ -35,6 +35,25 @@ limitations under the License.
   toString(a)::
     if std.type(a) == 'string' then a else '' + a,
 
+  toBool(input, all=false)::
+    assert std.isBoolean(all) : 'toBool second parameter must be Boolean, got ' + std.type(all);
+    if std.isArray(input) then
+      std.length(input) > 0
+    else if std.isBoolean(input) then
+      input
+    else if std.isFunction(input) then
+      true
+    else if std.isNumber(input) then
+      input != 0
+    else if std.isObject(input) then
+      std.toBool(if all then std.objectFieldsAll(input) else std.objectFields(input))
+    else if std.isString(input) then
+      std.length(input) > 0
+    else if input == null then
+      false
+    else
+      error 'toBool first parameter unrecognized type, got ' + std.type(input),
+
   substr(str, from, len)::
     assert std.isString(str) : 'substr first parameter should be a string, got ' + std.type(str);
     assert std.isNumber(from) : 'substr second parameter should be a string, got ' + std.type(from);

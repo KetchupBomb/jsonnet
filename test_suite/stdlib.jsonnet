@@ -199,6 +199,23 @@ std.assertEqual(std.toString('str'), 'str') &&
 std.assertEqual(std.toString(''), '') &&
 std.assertEqual(std.toString([1, 2, 'foo']), '[1, 2, "foo"]') &&
 
+std.assertEqual(std.toBool([]), false) &&
+std.assertEqual(std.toBool(['']), true) &&
+std.assertEqual(std.toBool(true), true) &&
+std.assertEqual(std.toBool(false), false) &&
+std.assertEqual(std.toBool(function() null), true) &&
+std.assertEqual(std.toBool(function(a) a), true) &&
+std.assertEqual(std.toBool(0), false) &&
+std.assertEqual(std.toBool(1), true) &&
+std.assertEqual(std.toBool(-1), true) &&
+std.assertEqual(std.toBool({}), false) &&
+std.assertEqual(std.toBool({ foo: null }), true) &&
+std.assertEqual(std.toBool({ foo:: null }, false), false) &&
+std.assertEqual(std.toBool({ foo:: null }, true), true) &&
+std.assertEqual(std.toBool(''), false) &&
+std.assertEqual(std.toBool(' '), true) &&
+std.assertEqual(std.toBool(null), false) &&
+
 std.assertEqual(std.substr('cookie', 1, 3), 'ook') &&
 std.assertEqual(std.substr('cookie', 1, 0), '') &&
 std.assertEqual(std.substr('cookie', 1, 15), 'ookie') &&
